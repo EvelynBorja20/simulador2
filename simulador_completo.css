@@ -78,23 +78,21 @@
       color: white;
     }
 
-    .aprobado {
-      background: #d4edda;
-      color: #155724;
-      padding: 15px;
-      border-radius: 5px;
-      font-weight: bold;
-      margin-top: 15px;
-    }
+   .aprobado {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border: 1px solid #c3e6cb;
+    margin-top: 10px;
+}
 
-    .rechazado {
-      background: #f8d7da;
-      color: #721c24;
-      padding: 15px;
-      border-radius: 5px;
-      font-weight: bold;
-      margin-top: 15px;
-    }
+.rechazado {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    margin-top: 10px;
+}
 
     .card {
       background: #f1f1f1;
