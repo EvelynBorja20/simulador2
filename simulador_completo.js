@@ -1,6 +1,6 @@
-// Variables Globales
+// --- VARIABLES GLOBALES ---
 let clientes = [];
-let creditos = [];
+let creditos = []; // Arreglo para el PASO 2
 let tasaInteresGlobal = 15;
 let clienteSeleccionado = null;
 
@@ -60,11 +60,12 @@ function pintarClientes() {
     let tabla = document.getElementById("tablaClientes");
     tabla.innerHTML = ""; 
     clientes.forEach(c => {
-        tabla.innerHTML += `<tr>
+        let fila = `<tr>
             <td>${c.cedula}</td><td>${c.nombre}</td><td>${c.apellido}</td>
             <td>${c.ingresos}</td><td>${c.egresos}</td>
             <td><button onclick="seleccionarCliente('${c.cedula}')">Actualizar</button></td>
         </tr>`;
+        tabla.innerHTML += fila;
     });
 }
 
@@ -80,13 +81,15 @@ function seleccionarCliente(cedula) {
 }
 
 function limpiar() {
-    mostrarTextoEnCaja("cedula", ""); mostrarTextoEnCaja("nombre", "");
-    mostrarTextoEnCaja("apellido", ""); mostrarTextoEnCaja("ingresos", "");
+    mostrarTextoEnCaja("cedula", ""); 
+    mostrarTextoEnCaja("nombre", "");
+    mostrarTextoEnCaja("apellido", ""); 
+    mostrarTextoEnCaja("ingresos", "");
     mostrarTextoEnCaja("egresos", "");
     clienteSeleccionado = null;
 }
 
-// --- TALLER 2: LÓGICA DE CRÉDITOS (CORREGIDA) ---
+// --- TALLER 2 Y 3: LÓGICA DE CRÉDITOS ---
 
 function buscarClienteCredito() {
     let ced = recuperaraTexto("buscarCedulaCredito");
@@ -110,7 +113,7 @@ function buscarClienteCredito() {
 
 function calcularCredito() {
     if (!clienteSeleccionado) {
-        alert("Primero busque y seleccione un cliente.");
+        alert("Primero busque un cliente.");
         return;
     }
 
@@ -131,55 +134,72 @@ function calcularCredito() {
         Cuota mensual: ${cuotaMensual.toFixed(2)}<br>
         RESULTADO: ${aprobado ? "APROBADO" : "RECHAZADO"}`;
 
-    // --- CORRECCIÓN TUTOR: El botón se habilita SOLO si es aprobado ---
+    // PASO 2: Habilitar el botón solo si fue aprobado
     document.getElementById("btnSolicitarCredito").disabled = !aprobado;
 }
 
+// PASO 2: Función Asignar Crédito
 function solicitarCredito() {
-    let monto = recuperarFloat("montoCredito");
-    let plazo = recuperarInt("plazoCredito");
-    let totalPagar = monto + (monto * (tasaInteresGlobal / 100));
-    let cuota = (totalPagar / plazo).toFixed(2);
+    let montoCalculado = recuperarFloat("montoCredito");
+    let plazoIngresado = recuperarInt("plazoCredito");
+    let totalPagar = montoCalculado + (montoCalculado * (tasaInteresGlobal / 100));
+    let cuotaCalculada = (totalPagar / plazoIngresado).toFixed(2);
 
-    creditos.push({
+    // Estructura del objeto solicitada en el PASO 2
+    let credito = {
         cedula: clienteSeleccionado.cedula,
         nombre: clienteSeleccionado.nombre,
         apellido: clienteSeleccionado.apellido,
-        monto: monto,
+        monto: montoCalculado,
         tasa: tasaInteresGlobal,
-        plazo: plazo,
-        cuota: cuota
-    });
+        plazo: plazoIngresado,
+        cuota: cuotaCalculada
+    };
 
-    alert("Crédito registrado con éxito");
-    pintarCreditos();
+    creditos.push(credito);
+    alert("Crédito asignado correctamente");
+    
+    // Al asignar, mostramos todos (PASO 7) y cambiamos de sección
+    pintarCreditos(creditos);
     mostrarSeccion("listaCreditos");
 }
 
-function pintarCreditos() {
+// PASO 4: Función buscarCreditos(cedula)
+function buscarCreditos(cedula) {
+    let filtrados = [];
+    for (let i = 0; i < creditos.length; i++) {
+        if (creditos[i].cedula === cedula) {
+            filtrados.push(creditos[i]);
+        }
+    }
+    return filtrados;
+}
+
+// PASO 5: Función pintarCreditos(arreglo)
+function pintarCreditos(arregloCreditos) {
     let tabla = document.getElementById("tablaCreditos");
-    tabla.innerHTML = "";
-    creditos.forEach(cre => {
-        tabla.innerHTML += `<tr>
+    tabla.innerHTML = ""; // Limpiar tabla antes de pintar
+
+    arregloCreditos.forEach(cre => {
+        let fila = `<tr>
             <td>${cre.cedula}</td>
-            <td>${cre.nombre} ${cre.apellido}</td>
+            <td>${cre.nombre}</td>
+            <td>${cre.apellido}</td>
             <td>${cre.monto}</td>
             <td>${cre.tasa}%</td>
-            <td>${cre.plazo} meses</td>
+            <td>${cre.plazo}</td>
             <td>${cre.cuota}</td>
         </tr>`;
+        tabla.innerHTML += fila;
     });
 }
 
+// PASO 6: Función buscarCreditosCliente
 function buscarCreditosCliente() {
-    let ced = recuperaraTexto("buscarCedulaListado");
-    let filtrados = creditos.filter(c => c.cedula === ced);
-    let tabla = document.getElementById("tablaCreditos");
-    tabla.innerHTML = "";
-    filtrados.forEach(cre => {
-        tabla.innerHTML += `<tr>
-            <td>${cre.cedula}</td><td>${cre.nombre} ${cre.apellido}</td>
-            <td>${cre.monto}</td><td>${cre.tasa}%</td><td>${cre.plazo}</td><td>${cre.cuota}</td>
-        </tr>`;
-    });
+    // 1. Tomar valor de la cédula
+    let cedulaCaja = recuperaraTexto("buscarCedulaListado");
+    // 2. Invocar buscarCreditos
+    let resultado = buscarCreditos(cedulaCaja);
+    // 3. Enviar a pintarCreditos
+    pintarCreditos(resultado);
 }

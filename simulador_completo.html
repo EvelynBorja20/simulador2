@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Créditos</title>
+    <title>Sistema de Créditos - Simulador Profesional</title>
     <link rel="stylesheet" href="simulador_completo.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
     <button onclick="mostrarSeccion('parametros')">Parámetros</button>
     <button onclick="mostrarSeccion('clientes')">Clientes</button>
     <button onclick="mostrarSeccion('credito')">Créditos</button>
-    <button onclick="mostrarSeccion('listaCreditos')">Historial</button>
+    <button onclick="mostrarSeccion('listaCreditos')">Créditos Registrados</button>
 </nav>
 
 <section id="parametros" class="activa">
@@ -70,7 +70,7 @@
     </div>
 
     <div id="datosClienteCredito" class="card">
-        <p style="color: gray;">Busque un cliente para ver su información.</p>
+        <p style="color: gray; font-style: italic;">Realice una búsqueda para cargar los datos del cliente.</p>
     </div>
 
     <div class="card">
@@ -83,33 +83,33 @@
         <button onclick="calcularCredito()">Calcular viabilidad</button>
     </div>
 
-    <div id="resultadoCredito">
-        </div>
+    <div id="resultadoCredito"></div>
 
     <div style="text-align: center; margin-top: 20px;">
         <button id="btnSolicitarCredito" onclick="solicitarCredito()" disabled>
-            Confirmar y Solicitar Crédito
+            Asignar Crédito
         </button>
     </div>
 </section>
 
 <section id="listaCreditos">
-    <h2>Historial de Créditos Registrados</h2>
+    <h2>Créditos Registrados</h2>
     <div class="card">
-        <input type="text" id="buscarCedulaListado" placeholder="Filtrar por cédula">
-        <button onclick="buscarCreditosCliente()">Buscar</button>
-        <button onclick="pintarCreditos()" style="background-color: #6c757d;">Ver todos</button>
+        <input type="text" id="buscarCedulaListado" placeholder="Cédula del cliente">
+        <button onclick="buscarCreditosCliente()">Buscar por Cliente</button>
+        <button onclick="pintarCreditos(creditos)" style="background-color: #6c757d;">Ver todos</button>
     </div>
 
     <table>
         <thead>
             <tr>
                 <th>Cédula</th>
-                <th>Cliente</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
                 <th>Monto</th>
                 <th>Tasa</th>
                 <th>Plazo</th>
-                <th>Cuota Mensual</th>
+                <th>Cuota</th>
             </tr>
         </thead>
         <tbody id="tablaCreditos">
