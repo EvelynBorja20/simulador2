@@ -33,9 +33,7 @@ function guardarTasa() {
 // --- PARTE 3: ADMINISTRACIÓN DE CLIENTES ---
 function buscarCliente(cedula) {
     for (let i = 0; i < clientes.length; i++) {
-        if (clientes[i].cedula === cedula) {
-            return clientes[i];
-        }
+        if (clientes[i].cedula === cedula) return clientes[i];
     }
     return null;
 }
@@ -51,10 +49,8 @@ function guardarCliente() {
     if (existente == null) {
         clientes.push({ cedula: ced, nombre: nom, apellido: ape, ingresos: ing, egresos: egr });
     } else {
-        existente.nombre = nom;
-        existente.apellido = ape;
-        existente.ingresos = ing;
-        existente.egresos = egr;
+        existente.nombre = nom; existente.apellido = ape;
+        existente.ingresos = ing; existente.egresos = egr;
     }
     pintarClientes();
     limpiar();
@@ -65,11 +61,8 @@ function pintarClientes() {
     tabla.innerHTML = ""; 
     clientes.forEach(c => {
         tabla.innerHTML += `<tr>
-            <td>${c.cedula}</td>
-            <td>${c.nombre}</td>
-            <td>${c.apellido}</td>
-            <td>${c.ingresos}</td>
-            <td>${c.egresos}</td>
+            <td>${c.cedula}</td><td>${c.nombre}</td><td>${c.apellido}</td>
+            <td>${c.ingresos}</td><td>${c.egresos}</td>
             <td><button onclick="seleccionarCliente('${c.cedula}')">Actualizar</button></td>
         </tr>`;
     });
@@ -87,14 +80,13 @@ function seleccionarCliente(cedula) {
 }
 
 function limpiar() {
-    mostrarTextoEnCaja("cedula", "");
-    mostrarTextoEnCaja("nombre", "");
-    mostrarTextoEnCaja("apellido", "");
-    mostrarTextoEnCaja("ingresos", "");
+    mostrarTextoEnCaja("cedula", ""); mostrarTextoEnCaja("nombre", "");
+    mostrarTextoEnCaja("apellido", ""); mostrarTextoEnCaja("ingresos", "");
     mostrarTextoEnCaja("egresos", "");
+    clienteSeleccionado = null;
 }
 
-// --- TALLER 2: LÓGICA DE CRÉDITOS ---
+// --- TALLER 2: LÓGICA DE CRÉDITOS (CORREGIDA) ---
 
 function buscarClienteCredito() {
     let ced = recuperaraTexto("buscarCedulaCredito");
@@ -102,16 +94,14 @@ function buscarClienteCredito() {
     let contenedor = document.getElementById("datosClienteCredito");
 
     if (cliente) {
-        clienteSeleccionado = cliente; // Guardamos para el cálculo posterior
-        // Armado dinámico según Parte 3 del Taller 2
+        clienteSeleccionado = cliente;
         contenedor.innerHTML = `
             <h3>Datos del Cliente</h3>
             <p><strong>Cédula:</strong> ${cliente.cedula}</p>
             <p><strong>Nombre:</strong> ${cliente.nombre}</p>
             <p><strong>Apellido:</strong> ${cliente.apellido}</p>
             <p><strong>Ingresos:</strong> ${cliente.ingresos}</p>
-            <p><strong>Egresos:</strong> ${cliente.egresos}</p>
-        `;
+            <p><strong>Egresos:</strong> ${cliente.egresos}</p>`;
     } else {
         clienteSeleccionado = null;
         contenedor.innerHTML = "<p>Cliente no encontrado</p>";
@@ -128,24 +118,21 @@ function calcularCredito() {
     let plazo = recuperarInt("plazoCredito");
     let resultadoDiv = document.getElementById("resultadoCredito");
 
-    // Fórmulas (Parte 4)
     let capacidadPago = (clienteSeleccionado.ingresos - clienteSeleccionado.egresos) * 0.4;
     let totalPagar = monto + (monto * (tasaInteresGlobal / 100));
     let cuotaMensual = totalPagar / plazo;
 
     let aprobado = cuotaMensual <= capacidadPago;
 
-    // Estilos y Mensaje (Parte 5 y 6)
     resultadoDiv.className = aprobado ? "aprobado" : "rechazado";
     resultadoDiv.innerHTML = `
         Capacidad de pago: ${capacidadPago.toFixed(2)}<br>
         Total a pagar: ${totalPagar.toFixed(2)}<br>
         Cuota mensual: ${cuotaMensual.toFixed(2)}<br>
-        RESULTADO: ${aprobado ? "APROBADO" : "RECHAZADO"}
-    `;
+        RESULTADO: ${aprobado ? "APROBADO" : "RECHAZADO"}`;
 
-    // Habilitar botón de solicitud si se calculó
-    document.getElementById("btnSolicitarCredito").disabled = false;
+    // --- CORRECCIÓN TUTOR: El botón se habilita SOLO si es aprobado ---
+    document.getElementById("btnSolicitarCredito").disabled = !aprobado;
 }
 
 function solicitarCredito() {
@@ -164,7 +151,7 @@ function solicitarCredito() {
         cuota: cuota
     });
 
-    alert("Crédito registrado exitosamente");
+    alert("Crédito registrado con éxito");
     pintarCreditos();
     mostrarSeccion("listaCreditos");
 }
@@ -175,8 +162,7 @@ function pintarCreditos() {
     creditos.forEach(cre => {
         tabla.innerHTML += `<tr>
             <td>${cre.cedula}</td>
-            <td>${cre.nombre}</td>
-            <td>${cre.apellido}</td>
+            <td>${cre.nombre} ${cre.apellido}</td>
             <td>${cre.monto}</td>
             <td>${cre.tasa}%</td>
             <td>${cre.plazo} meses</td>
@@ -192,7 +178,7 @@ function buscarCreditosCliente() {
     tabla.innerHTML = "";
     filtrados.forEach(cre => {
         tabla.innerHTML += `<tr>
-            <td>${cre.cedula}</td><td>${cre.nombre}</td><td>${cre.apellido}</td>
+            <td>${cre.cedula}</td><td>${cre.nombre} ${cre.apellido}</td>
             <td>${cre.monto}</td><td>${cre.tasa}%</td><td>${cre.plazo}</td><td>${cre.cuota}</td>
         </tr>`;
     });
