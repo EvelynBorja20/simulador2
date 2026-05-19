@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Créditos - Simulador Profesional</title>
+    <title>Sistema de Créditos Avanzado - Evelyn Borja</title>
     <link rel="stylesheet" href="simulador_completo.css">
 </head>
 <body>
 
 <header>
-    <h1>Sistema Básico de Créditos</h1>
+    <h1>Sistema Bancario de Gestión de Créditos</h1>
 </header>
 
 <nav>
@@ -17,17 +17,25 @@
     <button onclick="mostrarSeccion('clientes')">Clientes</button>
     <button onclick="mostrarSeccion('credito')">Créditos</button>
     <button onclick="mostrarSeccion('listaCreditos')">Créditos Registrados</button>
+    <button onclick="mostrarSeccion('acercaDe')">Acerca de</button>
 </nav>
 
 <section id="parametros" class="activa">
-    <h2>Configurar Parámetros</h2>
+    <h2>Configurar Parámetros del Sistema</h2>
     <div class="card">
-        <label>Tasa de interés anual:</label>
-        <input type="number" id="tasaInteres" min="10" max="20" value="15">
-        <span>%</span>
-        <br><br>
+        <h3>Tasa de Interés</h3>
+        <label>Tasa anual:</label>
+        <input type="number" id="tasaInteres" min="10" max="20" value="15"> <span>%</span>
         <button onclick="guardarTasa()">Guardar tasa</button>
         <p id="mensajeTasa"></p>
+    </div>
+
+    <div class="card">
+        <h3>Límite de Crédito</h3>
+        <label>Monto Máximo Permitido ($):</label>
+        <input type="number" id="montoMaximoInput" placeholder="Ej: 20000" value="50000">
+        <button onclick="guardarMontoMaximo()">Guardar Monto Máximo</button>
+        <p id="mensajeMontoMax"></p>
     </div>
 </section>
 
@@ -37,6 +45,7 @@
         <input type="text" id="cedula" placeholder="Cédula">
         <input type="text" id="nombre" placeholder="Nombre">
         <input type="text" id="apellido" placeholder="Apellido">
+        <input type="text" id="telefono" placeholder="Teléfono">
         <input type="number" id="ingresos" placeholder="Ingresos Mensuales">
         <input type="number" id="egresos" placeholder="Egresos Mensuales">
         <br><br>
@@ -51,13 +60,12 @@
                 <th>Cédula</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Ingresos</th>
+                <th>Teléfono</th> <th>Ingresos</th>
                 <th>Egresos</th>
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody id="tablaClientes">
-            </tbody>
+        <tbody id="tablaClientes"></tbody>
     </table>
 </section>
 
@@ -74,7 +82,7 @@
     </div>
 
     <div class="card">
-        <label>Monto del préstamo:</label>
+        <label>Monto del préstamo ($):</label>
         <input type="number" id="montoCredito" placeholder="Ej: 5000">
         <br>
         <label>Plazo (Meses):</label>
@@ -86,9 +94,7 @@
     <div id="resultadoCredito"></div>
 
     <div style="text-align: center; margin-top: 20px;">
-        <button id="btnSolicitarCredito" onclick="solicitarCredito()" disabled>
-            Asignar Crédito
-        </button>
+        <button id="btnSolicitarCredito" onclick="solicitarCredito()" disabled>Asignar Crédito</button>
     </div>
 </section>
 
@@ -98,6 +104,8 @@
         <input type="text" id="buscarCedulaListado" placeholder="Cédula del cliente">
         <button onclick="buscarCreditosCliente()">Buscar por Cliente</button>
         <button onclick="pintarCreditos(creditos)" style="background-color: #6c757d;">Ver todos</button>
+        
+        <button onclick="mostrarCreditosVIP()" style="background-color: #ffc107; color: black;">Créditos VIP (+$5000)</button>
     </div>
 
     <table>
@@ -112,13 +120,32 @@
                 <th>Cuota</th>
             </tr>
         </thead>
-        <tbody id="tablaCreditos">
-            </tbody>
+        <tbody id="tablaCreditos"></tbody>
     </table>
+</section>
+
+<section id="acercaDe">
+    <h2>Acerca del Desarrollador</h2>
+    <div class="card" style="text-align: center; border-top: 4px solid #004a99;">
+        <div style="margin-bottom: 15px;">
+            <span style="font-size: 5rem;">👩‍💻</span>
+        </div>
+        <h3 style="font-size: 24px; margin: 5px 0;">Evelyn Borja</h3>
+        <p style="color: #555; font-weight: bold; margin: 5px 0;">Estudiante de Desarrollo de Software / Programadora Web</p>
+        <hr style="width: 50%; border: 0; border-top: 1px solid #ccc; margin: 15px auto;">
+        
+        <p style="font-style: italic; font-size: 16px; color: #333; max-width: 500px; margin: 0 auto 20px auto;">
+            "Combino la precisión del código estructurado con la realidad del día a día, buscando siempre soluciones eficientes que transformen la experiencia del usuario."
+        </p>
+
+        <h4 style="margin-bottom: 5px; color: #1a2a40;">Contacto Profesional:</h4>
+        <p style="margin: 5px 0;"><strong>GitHub:</strong> github.com/EvelynBorja</p>
+        <p style="margin: 5px 0;"><strong>LinkedIn:</strong> linkedin.com/in/evelyn-borja</p>
+        <p style="margin: 5px 0;"><strong>Email:</strong> evelyn.borja@correo.com</p>
+    </div>
 </section>
 
 <script src="utilitarios.js"></script>
 <script src="simulador_completo.js"></script>
-
 </body>
 </html>

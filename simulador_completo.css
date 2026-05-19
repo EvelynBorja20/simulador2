@@ -1,103 +1,153 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 0;
-    }
+header {
+  background: #1f3c88;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
 
-    header {
-      background: #1f3c88;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+nav {
+  display: flex;
+  justify-content: center;
+  background: #e0e0e0;
+  padding: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-    nav {
-      display: flex;
-      justify-content: center;
-      background: #e0e0e0;
-      padding: 10px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+nav button {
+  padding: 10px 15px;
+  border: none;
+  background: #1f3c88;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
-    nav button {
-      padding: 10px 15px;
-      border: none;
-      background: #1f3c88;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-    }
+nav button:hover {
+  background: #14275c;
+}
 
-    nav button:hover {
-      background: #14275c;
-    }
+section {
+  display: none;
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  margin-top: 20px;
+  border-radius: 8px;
+}
 
-    section {
-      display: none;
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
-      background: white;
-      margin-top: 20px;
-      border-radius: 8px;
-    }
+section.activa {
+  display: block;
+}
 
-    section.activa {
-      display: block;
-    }
+input, select {
+  padding: 8px;
+  margin: 5px;
+  width: 220px;
+}
 
-    input, select {
-      padding: 8px;
-      margin: 5px;
-      width: 220px;
-    }
+button {
+  padding: 8px 12px;
+  margin: 5px;
+  cursor: pointer;
+}
 
-    button {
-      padding: 8px 12px;
-      margin: 5px;
-      cursor: pointer;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
 
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: center;
-    }
+th {
+  background: #1f3c88;
+  color: white;
+}
 
-    th {
-      background: #1f3c88;
-      color: white;
-    }
-
-   .aprobado {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 15px;
-    border: 1px solid #c3e6cb;
-    margin-top: 10px;
+.aprobado {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 15px;
+  border: 1px solid #c3e6cb;
+  margin-top: 10px;
 }
 
 .rechazado {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 15px;
-    border: 1px solid #f5c6cb;
-    margin-top: 10px;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border: 1px solid #f5c6cb;
+  margin-top: 10px;
 }
 
-    .card {
-      background: #f1f1f1;
-      padding: 15px;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-  
+.card {
+  background: #f1f1f1;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+/* =======================================================
+   NUEVAS MODIFICACIONES AGREGADAS PARA EL EXAMEN FINAL 
+   ======================================================= */
+
+/* 1. Estilo especial para resaltar el Botón de Créditos VIP */
+button[onclick="mostrarCreditosVIP()"] {
+  background-color: #ffc107 !important; /* Color amarillo de atención */
+  color: #000 !important;              /* Texto negro para alto contraste */
+  border: 1px solid #d39e00;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+button[onclick="mostrarCreditosVIP()"]:hover {
+  background-color: #e0a800 !important; /* Amarillo un poco más oscuro al pasar el mouse */
+}
+
+/* 2. Estilos específicos para la sección "Acerca de" (Requerimiento 4) */
+#acercaDe {
+  border-top: 5px solid #1f3c88; /* Detalle superior con tu azul base */
+}
+
+#acercaDe .card {
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+}
+
+#acercaDe h3 {
+  color: #1f3c88;
+}
+
+#acercaDe hr {
+  width: 50%;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 15px auto;
+}
+
+/* 3. Ajuste para que las etiquetas <label> de parámetros se vean ordenadas */
+#parametros label {
+  display: inline-block;
+  width: 220px;
+  font-weight: bold;
+  color: #333;
+}
+
+#parametros span {
+  font-weight: bold;
+  color: #555;
+}
